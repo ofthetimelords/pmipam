@@ -44,11 +44,11 @@ th {
 }
 
 table th:nth-child(1) {
-    width: 15%;
+    width: 13%;
 }
 
 table th:nth-child(2) {
-    width: 15%;
+    width: 12%;
 }
 
 table th:nth-child(3) {
@@ -80,7 +80,7 @@ table th:nth-child(9) {
 }
 
 table th:nth-child(10) {
-    width: 10%;
+    width: 15%;
 }
 
 td, th {
@@ -184,9 +184,13 @@ td.col8 {
 
 td.col9 {
     border-right: #999 1px dotted;
+    font-size: 0.7em;
+    font-stretch: 80%;
 }
 
 td.col10 {
+    font-size: 0.7em;
+    font-stretch: 80%;
 }
 
 td.disabled {
