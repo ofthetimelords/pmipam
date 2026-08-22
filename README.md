@@ -8,7 +8,7 @@ Screenshot (in-progress):
 This is a very simple IPAM that allows me to keep track of the numerous systems I have in my home datacentre. Between my place, my parents' home and the village home we
 have, I've managed to end up with 13 VLANs and a _lot_ of hosts.
 
-I used to use an Excel file, but maintaining the style between additions and removals of the hosts was more work than I was willing to do (in order to
+I used to use an Excel file, but maintaining the formatting between additions and removals of the hosts was more work than I was willing to put in (in order to
 keep a similar visual appearance to what you see in the screenshot).
 
 
@@ -24,7 +24,7 @@ It will get better!
 ## Why not use an existing tool?
 Because they can be more complicated than I would like to set up and use, and because most of them do not allow the single-page view that I want.
 
-I made this tool for my personal usage and as such, it may or may not fit your requirements.
+I made this tool for my personal usage and as such it may or may not fit your requirements.
 While I very much intend to avoid feature creep, I am open to suggestions, so feel free to contact me or create a PR. 
 Just be advised that I can't make any promises as to if and when I'll merge any changes.
 
@@ -34,6 +34,8 @@ Here: https://hub.docker.com/r/ofthetimelords/vtable.pmipam
 ## How do I configure it?
 
 ### Hosts file
+This is your source of truth.
+
 Have a look at the [hosts example file](hosts-example.yml) (YAML). The basic syntax is as follows:
 
 ```
