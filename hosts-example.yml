@@ -1,0 +1,20 @@
+﻿- name: ""                # Give the VLAN a name
+  vlanid: ""              # A numeric VLAN ID
+  cidr: ""                # This should be a CIDR address (e.g. 10.10.0.0/24)
+  domains:                # Optionally, a list of domain names this VLAN applies to
+  - ""                    # A string value, can be anything; valid domain names are not enforce.
+  baseColor: ""           # The base colour to be applied to this section of the VLAN. Use 6 digit hex notation (e.g. #ffffff)
+  endColor: ""            # Sections listed below will have their colours altered in a gradient manner. This is the colour the final section will have
+  notes: ""               # Additional notes. Not yet implemented
+  sections:               # A list of network sections. If the VLAN doesn't use any, just don't add any entries
+  - name: ""              # A name for the section
+    cidr: ""              # CIDR notation for this network section of the VLAN. Should belong in the VLAN's Network range, but it's not enforced
+    hosts:                # A list of hosts in this section. If there are no hosts, leave the list empty.
+    - name: ""            # The name of the host
+      ip:                 # The IP of the host (no CIDR notation)
+      ha:                 # High Availability Group. Allows you to mark hosts that expose VRRP IPs (e.g. through keepalived) with the same (integer) identifier)
+      status: ""          # NOT IMPLEMENTED YET. enabled = the host is enabled, disabled = the host will appear grayed out, na = Status is Not Available for this host
+      dhcp: ""            # enabled = the host receives its IP via DHCP, disabled = the host has a static IP, na = DHCP assignment is not allowed for this section
+      metrics: ""         # enabled = the host has metrics (e.g. prometheus) enabled, disabled = metrics are disabled, na = metrics are not available
+      notes: ""           # Additional notes for this host
+      todo: ""            # TODO text entry for this host

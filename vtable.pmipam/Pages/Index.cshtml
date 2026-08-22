@@ -1,0 +1,208 @@
+﻿@page
+@model Vtable.PmIpam.Views.IndexModel
+@using Vtable.PmIpam.Models
+@using System.Drawing
+
+<html>
+<head>
+    <title>Poor Man's IPAM</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <style>
+        @foreach (var vlan in this.Model.Root.Vlans)
+        {
+            <text>
+            td.vlan@(vlan.VlanId) {
+                background-color: @ColorTranslator.ToHtml(vlan.BaseColor);
+
+                    @{
+                        if (vlan.BaseColor.GetBrightness() > 0.4F)
+                        {
+                            <text>
+                            color: #000
+                            </text>
+                        }
+                }
+            }
+            </text>
+
+                int sections = vlan.Sections.Count + 1;
+
+                if (sections != 0)
+                {
+                    Color startColor = vlan.BaseColor;
+                    Color endColor = vlan.EndColor;
+                    int rStep = (startColor.R - endColor.R) / sections;
+                    int gStep = (startColor.G - endColor.G) / sections;
+                    int bStep = (startColor.B - endColor.B) / sections;
+
+                    for (int section = 1; section < sections; section++)
+                    {
+                        var calcColor = Color.FromArgb(startColor.R - rStep * section, startColor.G - gStep * section, startColor.B - bStep * section);
+                        <text>
+                            td.vlan@(vlan.VlanId + "-" + section) {
+                            background-color: @(ColorTranslator.ToHtml(calcColor));
+                            @{
+                                if (calcColor.GetBrightness() > 0.4F) {
+                                    <text>
+                                    color: #000;
+                                    </text>
+                                }
+                            }
+                            }
+                        </text>
+                    }
+                }
+            }
+
+    </style>
+</head>
+<body>
+    <h1>Poor man's IPAM</h1>
+    <div class="table-container">
+        <div class="table-scroll-box">
+            <table>
+                <thead>
+                    <tr>
+                        <th>VLAN</th>
+                        <th>Section</th>
+                        <th>Device</th>
+                        <th>IP Address</th>
+                        <th>HA</th>
+                        <th>Status</th>
+                        <th>DHCP <br />assign</th>
+                        <th>Metrics</th>
+                        <th>Notes</th>
+                        <th>TODO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var currentHost = 0;
+                        var totalHosts = this.Model.Root.Vlans.SelectMany(v => v.Sections.Where(s => s.Hosts is not null).SelectMany(s => s.Hosts)).Count();
+                    }
+                    @foreach (var vlan in this.Model.Root.Vlans)
+                    {
+                        int vlanRow = 0;
+                        int hostsInVlan = vlan.Sections.Where(s => s.Hosts is not null).SelectMany(s => s.Hosts).Count();
+                        int sectCount = 0;
+                        var domains = vlan.Domains ?? new List<string>{string.Empty};
+
+                        @foreach (var sect in vlan.Sections)
+                        {
+                            sectCount++;
+                            int sectRow = 0;
+                            int hostsInSection = sect?.Hosts?.Count ?? 2;
+
+                            @foreach (var host in sect.Hosts)
+                            {
+                                var rowStyle = string.Empty;
+                                var firstStyle = string.Empty;
+
+                                if (currentHost != 0)
+                                {
+                                        if (vlanRow == 0)
+                                            firstStyle = rowStyle = "vlansplit";
+                                        else if (vlanRow != 0 && sectRow == 0)
+                                            rowStyle = "sectionsplit";
+                                    }
+
+                                <tr>
+                                    @{
+                                        // Handle the vlan column}
+                                    }
+                                    @if (vlanRow == 0)
+                                    {
+                                        // VLAN ID row
+                                        <td class="@firstStyle vlan@(vlan.VlanId) vlan col1" rowspan="2">
+                                            <span>
+                                                @vlan.VlanId
+                                            </span>
+                                        </td>
+                                    }
+                                    else if (vlanRow == 2)
+                                    {
+                                        // VLAN Name row
+                                        <td class="@firstStyle vlan@(vlan.VlanId) vlanname col1">
+                                            <span>
+                                                @vlan.Name
+                                            </span>
+                                        </td>
+                                    }
+                                    else if (vlanRow == 3)
+                                    {
+                                        // Leave an empty line
+                                        <td class="@firstStyle vlan@(vlan.VlanId) col1"></td>
+                                    }
+                                    else if (vlanRow == 4)
+                                    {
+                                        // VLAN CIDR
+                                        <td class="@firstStyle vlancidr vlan@(vlan.VlanId) col1">
+                                            <span>
+                                                @vlan.Cidr
+                                            </span>
+                                        </td>
+                                    }
+                                    else if (vlanRow > 4 && vlanRow <= 4 + domains.Count)
+                                    {
+                                        // Show the domains
+                                        var domainIndex = vlanRow - 5;
+                                        <td class="@firstStyle vlandomain vlan@(vlan.VlanId) col1">
+                                            <span>
+                                                @domains[domainIndex]
+                                            </span>
+                                        </td>
+                                    }
+                                    else if (vlanRow == 5 + domains.Count)
+                                    {
+                                        <td class="@firstStyle vlan@(vlan.VlanId) col1" rowspan="@(hostsInVlan - (5 + domains.Count))"></td>
+                                    }
+
+
+
+                                    @{
+                                        // Handle the section
+                                    }
+                                    @if (sectRow == 0)
+                                    {
+                                        <td class="@rowStyle vlan@(vlan.VlanId)-@(sectCount) sectionname col2">
+                                            <span>
+                                                @sect.Name
+                                            </span>
+                                        </td>
+                                    }
+                                    else if (sectRow == 1)
+                                    {
+                                        <td class="@rowStyle vlan@(vlan.VlanId)-@(sectCount) sectioncidr col2">
+                                            <span>
+                                                @sect.Cidr
+                                            </span>
+                                        </td>
+                                    }
+                                    else if (sectRow == 2)
+                                    {
+                                        // Fill the rest of the section with a big empty cell
+                                        <td class="@rowStyle vlan@(vlan.VlanId)-@(sectCount) col2" rowspan="@(hostsInSection - 2)"></td>
+                                    }
+
+                                    <td class="host @rowStyle @this.Model.GetDisabled(host) vlan@(vlan.VlanId)-@(sectCount) col3">@host.Name</td>
+                                    <td class="host @rowStyle @this.Model.GetDisabled(host) vlan@(vlan.VlanId)-@(sectCount) col4">@host.IP</td>
+                                    <td class="host @rowStyle @this.Model.GetDisabled(host) vlan@(vlan.VlanId)-@(sectCount) col5">@host.HA</td>
+                                    <td class="host @rowStyle @this.Model.GetDisabled(host) @(host.Status == Status.NA ? "na" : "vlan" + vlan.VlanId + "-" + sectCount) col6">@(host.Status == Status.Enabled ? "☑" : host.Status == Status.Disabled ? "☐" : "")</td>
+                                    <td class="host @rowStyle @this.Model.GetDisabled(host) @(host.Dhcp == Status.NA ? "na" : "vlan" + vlan.VlanId + "-" + sectCount) col7">@(host.Dhcp == Status.Enabled ? "☑" : host.Dhcp == Status.Disabled ? "☐" : "")</td>
+                                    <td class="host @rowStyle @this.Model.GetDisabled(host) @(host.Metrics == Status.NA ? "na" : "vlan" + vlan.VlanId + "-" + sectCount) col8">@(host.Metrics == Status.Enabled ? "☑" : host.Metrics == Status.Disabled ? "☐" : "")</td>
+                                    <td class="host @rowStyle @this.Model.GetDisabled(host) vlan@(vlan.VlanId)-@(sectCount) col9">@host.Notes</td>
+                                    <td class="host @rowStyle @this.Model.GetDisabled(host) vlan@(vlan.VlanId)-@(sectCount) col10">@host.Todo</td>
+                                </tr>
+
+                                vlanRow++;
+                                sectRow++;
+                                currentHost++;
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

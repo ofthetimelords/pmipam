@@ -1,0 +1,9 @@
+services:
+  pmipam:
+    image: ofthetimelords/vtable.pmipam
+    environment:
+      - "Hosts=/data/hosts.yml"
+    volumes:
+      - "/container_data/pmipam/hosts.yml:/data/hosts.yml:ro"
+    ports:
+      - "8080:8080/tcp"
