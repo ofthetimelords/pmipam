@@ -9,9 +9,9 @@ namespace Vtable.PmIpam.Models
         public int? HA { get; set; }
         public IPAddress IP { get; set; }
         [YamlMember(Alias = "status")]
-        public Status? Status { get; set; } = Models.Status.Enabled;
-        public Status? Dhcp { get; set; } = Models.Status.Enabled;
-        public Status? Metrics { get; set; } = Models.Status.Enabled;
+        public Status Status { get; set; } = Models.Status.Enabled;
+        public Status Dhcp { get; set; } = Models.Status.Enabled;
+        public Status Metrics { get; set; } = Models.Status.Enabled;
         public string Notes { get; set; }
         public string Todo { get; set; }
     }
