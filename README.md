@@ -5,7 +5,8 @@ Screenshot (in-progress):
 ![Screenshot](assets/sshot.png)
 
 ## What is this?
-This is a very simple IPAM that allows me to keep track of the numerous systems I have in my home datacentre.
+This is a very simple IPAM that allows me to keep track of the numerous systems I have in my home datacentre. Between my place, my parents' home and the village home we
+have, I've managed to end up with 13 VLANs and a _lot_ of hosts.
 
 I used to use an Excel file, but maintaining the style between additions and removals of the hosts was more work than I was willing to do (in order to
 keep a similar visual appearance to what you see in the screenshot).
