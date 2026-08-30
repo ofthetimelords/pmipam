@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
+using System.Drawing;
 using System.Text;
 using Vtable.PmIpam.Models;
+using Vtable.PmIpam.ViewModels;
 using YamlDotNet.Serialization.NamingConventions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Vtable.PmIpam.Views
 {
@@ -30,13 +34,15 @@ namespace Vtable.PmIpam.Views
                 // dirty fix for the hosts
                 foreach (var vlan in vlans)
                 {
+                    if (vlan.Domains == null)
+                        vlan.Domains = new List<string>();
+
                     if (vlan.Sections == null)
                         vlan.Sections = new List<VlanSection>()
                         {
                             new VlanSection {
                                 Name = "(undefined)",
                                 Hosts = new List<Models.Host>{
-                                new NullHost(),
                                 new NullHost(),
                                 new NullHost()
                                 }
@@ -47,12 +53,9 @@ namespace Vtable.PmIpam.Views
                         foreach (var section in vlan.Sections)
                         {
                             if (section.Hosts == null)
-                                section.Hosts = new List<Models.Host>{
-                                new NullHost(),
-                                new NullHost(),
-                                new NullHost()
-                                };
-                            else if (section.Hosts.Count < 3)
+                                section.Hosts = new List<Models.Host>();
+
+                            if (section.Hosts.Count < 2)
                                 for(var i = 0; i < 3 - section.Hosts.Count; i++)
                                     section.Hosts.Add(new NullHost());
                         }
@@ -63,9 +66,10 @@ namespace Vtable.PmIpam.Views
             }
         }
 
-        public string GetDisabled(Models.Host host)
+
+        public HtmlString GetForeColor(Color backColor)
         {
-            return host is NullHost ? "disabled" : string.Empty;
+            return backColor.GetBrightness() > 0.4F ? new HtmlString("color: #000;") : HtmlString.Empty;
         }
     }
 }

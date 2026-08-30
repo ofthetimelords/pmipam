@@ -1,0 +1,24 @@
+﻿@using Vtable.PmIpam.ViewModels
+@model RowTDModel
+
+@if (this.Model.SectionTableRow == 0)
+{
+    <td class="@this.Model.RowStyle vlan@(this.Model.Vlan.VlanId)-@(this.Model.VlanSectionIndex) sectionname col2">
+        <span>
+            @this.Model.Section.Name
+        </span>
+    </td>
+}
+else if (this.Model.SectionTableRow == 1)
+{
+    <td class="@this.Model.RowStyle vlan@(this.Model.Vlan.VlanId)-@(this.Model.VlanSectionIndex) sectioncidr col2">
+        <span>
+            @this.Model.Section.Cidr
+        </span>
+    </td>
+}
+else if (this.Model.SectionTableRow == 2)
+{
+    // Fill the rest of the section with a big empty cell
+    <td class="@this.Model.RowStyle vlan@(this.Model.Vlan.VlanId)-@(this.Model.VlanSectionIndex) col2" rowspan="@(this.Model.TotalHostsInSection - 2)"></td>
+}

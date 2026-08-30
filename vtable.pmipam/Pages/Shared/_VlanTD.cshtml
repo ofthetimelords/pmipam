@@ -1,0 +1,49 @@
+﻿@using Vtable.PmIpam.ViewModels
+@model RowTDModel
+
+@if (this.Model.VlanTableRow == 0)
+{
+    // VLAN ID row
+    <td class="@this.Model.VlanRowStyle vlan@(this.Model.Vlan.VlanId) vlan col1" rowspan="2">
+        <span>
+            @this.Model.Vlan.VlanId
+        </span>
+    </td>
+}
+else if (this.Model.VlanTableRow == 2)
+{
+    // VLAN Name row
+    <td class="@this.Model.VlanRowStyle vlan@(this.Model.Vlan.VlanId) vlanname col1">
+        <span>
+            @this.Model.Vlan.Name
+        </span>
+    </td>
+}
+else if (this.Model.VlanTableRow == 3)
+{
+    // Leave an empty line
+    <td class="@this.Model.VlanRowStyle vlan@(this.Model.Vlan.VlanId) col1"></td>
+}
+else if (this.Model.VlanTableRow == 4)
+{
+    // VLAN CIDR
+    <td class="@this.Model.VlanRowStyle vlancidr vlan@(this.Model.Vlan.VlanId) col1">
+        <span>
+            @this.Model.Vlan.Cidr
+        </span>
+    </td>
+}
+else if (this.Model.VlanTableRow > 4 && this.Model.VlanTableRow <= 4 + this.Model.Vlan.Domains.Count)
+{
+    // Show the domains
+    var domainIndex = this.Model.VlanTableRow - 5;
+    <td class="@this.Model.VlanRowStyle vlandomain vlan@(this.Model.Vlan.VlanId) col1">
+        <span>
+            @this.Model.Vlan.Domains[domainIndex]
+        </span>
+    </td>
+}
+else if (this.Model.VlanTableRow == 5 + this.Model.Vlan.Domains.Count)
+{
+    <td class="@this.Model.VlanRowStyle vlan@(this.Model.Vlan.VlanId) col1" rowspan="@(this.Model.TotalHostsInVlan - (5 + this.Model.Vlan.Domains.Count))"></td>
+}

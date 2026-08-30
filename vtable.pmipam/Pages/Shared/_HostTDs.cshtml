@@ -1,0 +1,25 @@
+﻿@using Vtable.PmIpam.Models
+@using Vtable.PmIpam.ViewModels
+@model RowTDModel
+
+<td class="host @this.Model.RowStyle @this.Model.GetDisabled(this.Model.Host) vlan@(this.Model.Vlan.VlanId)-@(this.Model.VlanSectionIndex) col3">@this.Model.Host.Name</td>
+
+<td class="host @this.Model.RowStyle @this.Model.GetDisabled(this.Model.Host) vlan@(this.Model.Vlan.VlanId)-@(this.Model.VlanSectionIndex) col4">@this.Model.Host.IP</td>
+
+<td class="host @this.Model.RowStyle @this.Model.GetDisabled(this.Model.Host) vlan@(this.Model.Vlan.VlanId)-@(this.Model.VlanSectionIndex) col5">@this.Model.Host.HA</td>
+
+<td class="host @this.Model.RowStyle @this.Model.GetDisabled(this.Model.Host) @(
+    this.Model.Host.Status == Status.NA ? "na" : "vlan" + this.Model.Vlan.VlanId + "-" + this.Model.VlanSectionIndex) col6">@(
+    this.Model.Host.Status == Status.Enabled ? "☑" : this.Model.Host.Status == Status.Disabled ? "☐" : "")</td>
+
+<td class="host @this.Model.RowStyle @this.Model.GetDisabled(this.Model.Host) @(
+    this.Model.Host.Dhcp == Status.NA ? "na" : "vlan" + this.Model.Vlan.VlanId + "-" + this.Model.VlanSectionIndex) col7">@(
+    this.Model.Host.Dhcp == Status.Enabled ? "☑" : this.Model.Host.Dhcp == Status.Disabled ? "☐" : "")</td>
+
+<td class="host @this.Model.RowStyle @this.Model.GetDisabled(this.Model.Host) @(
+    this.Model.Host.Metrics == Status.NA ? "na" : "vlan" + this.Model.Vlan.VlanId + "-" + this.Model.VlanSectionIndex) col8">@(
+    this.Model.Host.Metrics == Status.Enabled ? "☑" : this.Model.Host.Metrics == Status.Disabled ? "☐" : "")</td>
+
+<td class="host @this.Model.RowStyle @this.Model.GetDisabled(this.Model.Host) vlan@(this.Model.Vlan.VlanId)-@(this.Model.VlanSectionIndex) col9">@this.Model.Host.Notes</td>
+
+<td class="host @this.Model.RowStyle @this.Model.GetDisabled(this.Model.Host) vlan@(this.Model.Vlan.VlanId)-@(this.Model.VlanSectionIndex) col10">@this.Model.Host.Todo</td>
