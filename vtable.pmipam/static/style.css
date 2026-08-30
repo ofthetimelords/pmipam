@@ -2,17 +2,18 @@ body {
     font-family: "Lucida Sans","Lucida Sans Regular","Lucida Grande","Lucida Sans Unicode",Geneva,Verdana,sans-serif;
     color: rgb(190,200,210);
     background-color: #21242b;
-    margin: 0;
+    margin-bottom: 5px;
     /*background-image: url(/Static/back.jpg);*/
     background-size: contain;
-    background-attachment: fixed
+    background-attachment: fixed;
+    overflow: hidden;
 }
 
 .table-container {
-    max-height: 88vh;
     overflow-y: auto;
+    height: 90%;
     width: 90%;
-    margin: 2% auto;
+    margin: 1% auto;
     border-radius: 10px;
     box-shadow: 20px 20px 30px rgba(0,0,0,.75);
     border: #fff 2px solid;
@@ -21,7 +22,7 @@ body {
 }
 
 .table-scroll-box {
-    max-height: 88vh;
+    max-height: 100%;
     overflow-y: auto;
 }
 
@@ -48,11 +49,11 @@ table th:nth-child(1) {
 }
 
 table th:nth-child(2) {
-    width: 12%;
+    width: 15%;
 }
 
 table th:nth-child(3) {
-    width: 15%;
+    width: 14%;
 }
 
 table th:nth-child(4) {
@@ -80,7 +81,7 @@ table th:nth-child(9) {
 }
 
 table th:nth-child(10) {
-    width: 15%;
+    width: 13%;
 }
 
 td, th {

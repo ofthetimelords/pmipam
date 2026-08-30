@@ -53,8 +53,8 @@
                         <th>VLAN</th>
                         <th>Section</th>
                         <th>Device</th>
-                        <th>IP Address
-                                            <div class="ipPopup">
+                        <th>IP Address ⓘ
+                    <div class="ipPopup">
                         Total Hosts: @this.Model.Root.Vlans.SelectMany(v => v.Sections.Where(s => s.Hosts is not null).SelectMany(s => s.Hosts)).Count()
                     </div>
 </th>
