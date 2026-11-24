@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     git
 
 COPY harden.sh /harden.sh
-RUN /bin/bash /harden.sh
+#RUN /bin/bash /harden.sh
 WORKDIR /app
 COPY --from=build /app .
 
