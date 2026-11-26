@@ -39,5 +39,5 @@ jobs:
           build-args: |
             CACHEBUST=${{ steps.vars.outputs.cachebust }}
           tags: |
-            vtable/pmipam:${{ steps.vars.outputs.pl_version }}
-            vtable/pmipam:latest
+            ofthetimelords/pmipam:${{ steps.vars.outputs.pl_version }}
+            ofthetimelords/pmipam:latest
